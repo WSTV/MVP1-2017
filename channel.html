@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Whitespace-tv Channel</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="css/bootstrap-responsive.css" type="text/css" rel="stylesheet">
+	<link href="css/jquery.jscrollpane.css" type="text/css" rel="stylesheet">
+	<link href="css/bootstrap.css" type="text/css" rel="stylesheet" media="screen">
+	<link href="css/main.css" type="text/css" rel="stylesheet" media="screen">
+	<script async src="//www.google-analytics.com/analytics.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/purl.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery.tools.min.js"></script>
+	<script type="text/javascript" src="js/jquery.xml2json.js"></script>
+	<script type="text/javascript" src="js/underscore.string.min.js"></script>
+	<script type="text/javascript" src="js/city-page.js"></script>
+	<script>
+	
+	    var g_cityid ='10000';
+		
+		$(document).ready(function() {
+			if ($.url().param('show-hidden')) {
+				$('.default-hidden').show();
+				$('#menu-options').css('width', '70%');
+			}
+			
+			$('#user-settings-button').popover({
+				html: true,
+				content: 'User settings allow you to customize your experience in Whitespace.' +
+				'<br/>' +
+				'<br/>' +
+				'Anyone:' +
+				'<ul>' +
+					'<li>Set home City</li>' +
+					'<li>Set Home Channel</li>' +
+				'</ul>' +
+				'<br/>' +
+				'For premium subscribers only:' +
+				'<ul>' +
+					'<li>Set/change log in and password</li>' +
+					'<li>Friend Zone settings</li>' +
+					'<li>Notifications for vDVR and show schedules</li>' +
+					'<li>Set preferences for your own channel line up</li>' +
+				'</ul>'
+			});
+			
+			$('#friend-zone-button').popover({
+				html: true,
+				content: 'In the Friend Zone you, your friends and family can watch and interact in real time while the video is rolling. You can set it up exclusively for your friends or allow others to join just for a single event by password. We are really excited about this feature and look forward to your feedback on how you would use it and any ideas you have.'
+			});
+			
+			$('#premium-button').popover({
+				html: true,
+				content: 'Right now everything is free! Just provide us with your name and email address then enjoy Whitespace!  Please contact us with your feedback.' +
+					'<br/>' +
+					'<br/>' +
+					'Premium subscriptions will enable you to do a lot of cool things in the Whitespace like:' +
+					'<br/>' +
+					'<ul>' +
+						'<li>Create your own channel line up based on your preferences</li>' +
+						'<li>Set up a Friend Zone to interact in real time via chat or video with a select group of other viewers during a video event.</li>' +
+						'<li>View special event programming and Live Streaming events</li>' +
+						'<li>Schedule and store some videos for future viewing</li>' +
+						'<li>Arrange interactive video chats with others in your Friend Zone while you are viewing your video. Imagine watching a game and video chatting about your Fantasy results in real time.</li>' +
+					'</ul>'
+			});
+			
+			$('#contact-button').popover({
+				html: true,
+				content: 'You can reach us through email at:' +
+					'<br />' +
+					'<ul>' +
+						'<li><a href="mailto:Dave@321-tv.com">Dave@321-tv.com</a> – Founder and CEO</li>' +
+						'<li><a href="mailto:Jeff@321-tv.com">Jeff@321-tv.com</a> – Co-Founder and President</li>' +
+					'</ul>' +
+					'<br />' +
+					'If you need to speak with someone right away feel free to call Dave at <a href="tel:3129612777">(312) 961-2777</a>.'
+			});
+			
+			$('body').on('click', function (e) {
+			    $('.popover-link').each(function () {
+			        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+			            $(this).popover('hide');
+			        }
+			    });
+			});
+			
+			$('.popover-link').each(function () {
+			    $(this).click(function () {
+			        $(this).popover('show');
+			    });
+			});
+			
+			var cityid = $.url().param('cityid');
+			populateCityMenu(cityid);
+			populateChannelMenu(cityid);
+			
+			
+			ga('create', 'UA-45345035-2', 'whitespace-tv.com' , {'name': 'whitespace'});
+		    ga('whitespace.send', 'pageview',{'dimension1': cityid});
+			
+			var step = 25;
+			var scrolling = false;
+
+			$("#channel-arrow-up").bind("click", function(event) {
+			    event.preventDefault();
+			    $("#desktop-channel-menu").animate({
+			        scrollTop: "-=" + step + "px"
+			    });
+			}).bind("mouseover", function(event) {
+			    scrolling = true;
+			    scrollContent("up", "#desktop-channel-menu");
+			}).bind("mouseout", function(event) {
+			    scrolling = false;
+			});
+
+
+			$("#channel-arrow-down").bind("click", function(event) {
+			    event.preventDefault();
+			    $("#desktop-channel-menu").animate({
+			        scrollTop: "+=" + step + "px"
+			    });
+			}).bind("mouseover", function(event) {
+			    scrolling = true;
+			    scrollContent("down", "#desktop-channel-menu");
+			}).bind("mouseout", function(event) {
+			    scrolling = false;
+			});
+			
+			$("#city-arrow-up").bind("click", function(event) {
+			    event.preventDefault();
+			    $("#desktop-city-menu").animate({
+			        scrollTop: "-=" + step + "px"
+			    });
+			}).bind("mouseover", function(event) {
+			    scrolling = true;
+			    scrollContent("up", "#desktop-city-menu");
+			}).bind("mouseout", function(event) {
+			    scrolling = false;
+			});
+
+
+			$("#city-arrow-down").bind("click", function(event) {
+			    event.preventDefault();
+			    $("#desktop-city-menu").animate({
+			        scrollTop: "+=" + step + "px"
+			    });
+			}).bind("mouseover", function(event) {
+			    scrolling = true;
+			    scrollContent("down", "#desktop-city-menu");
+			}).bind("mouseout", function(event) {
+			    scrolling = false;
+			});
+
+			function scrollContent(direction, scrollMenu) {
+			    var amount = (direction === "up" ? "-=4px" : "+=4px");
+			    $(scrollMenu).animate({
+			        scrollTop: amount
+			    }, 1, function() {
+			        if (scrolling) {
+			            scrollContent(direction, scrollMenu);
+			        }
+			    });
+			}
+		});
+	</script>
+    <script>
+    	 var whitespaceproperty=location.host;
+		(function(i, s, o, g, r, a, m) {
+			i['GoogleAnalyticsObject'] = r;
+			i[r] = i[r] || function() {
+				(i[r].q = i[r].q || []).push(arguments)
+			}, i[r].l = 1 * new Date();
+			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = g;
+			m.parentNode.insertBefore(a, m)
+		})(window, document, 'script',
+				'//www.google-analytics.com/analytics.js', 'ga');
+
+		ga('create', 'UA-45345035-1', 'whitespace-tv-global.com');
+		ga('send', 'pageview');
+        
+        if (whitespaceproperty.indexOf('naperville-tv.com') > -1)
+        {
+            ga('create', 'UA-45345035-3', 'naperville-tv.com',{'name': 'naperville'});
+            ga('naperville.send', 'pageview',{'dimension1': 'Naperville'});
+         }
+		  if (whitespaceproperty.indexOf('whitespace-tv.com') > -1)
+        {
+            ga('create', 'UA-45345035-2', 'whitespace-tv.com',{'name': 'whitespace'});
+            ga('whitespace.send', 'pageview',{'dimension1': 'Whitespace'});
+         }
+		
+</script>
+
+</head>
+<body class="channel-body">
+<div class="container-fluid">
+	<div class="navbar main-nav body-content" style="margin-top: 20px">
+	  <div id="nav-container" class="navbar-inner">
+	    <a class="brand" style="padding:0px; width:10%;" href="index.html"><img style="padding-left:15px; padding-top:6px; height:40px;" src="img/wstv-round.png"></a>
+		<ul style="width:80%;" id="menu-options" class="nav nav-pills">
+			<li style="width:20%;" class="active" data-toggle="popover" data-placement="bottom">
+				<a id="user-settings-button" class="popover-link" rel="popover" data-placement="bottom" href="#" data-original-title="User Settings">User Settings</a>
+			</li>
+			<li style="width:20%;" class="active">
+				<a id="friend-zone-button" class="popover-link" rel="popover" data-placement="bottom" href="#" data-original-title="Create Friend Zone">Create Friend-zone</a>
+			</li>
+			<li style="width:20%;" class="active">
+				<a id="premium-button" class="popover-link" rel="popover" data-placement="bottom" href="#" data-original-title="Sign Up For Premium">Sign Up for Premium</a>
+			</li>
+		    <li style="width:20%;" class="active">
+		    	<a id="contact-button" class="popover-link" rel="popover" data-placement="bottom" href="#" data-original-title="Contact Us">Contact Us</a>
+		    </li>
+		    <li style="width:20%;" class="active"><a target="_blank" href="./feedbackform.php">Feedback</a></li>
+		</ul>
+		<form style="width:20%;" class="pull-right navbar-search default-hidden">
+			<input type="text" class="search-query" placeholder="Search">
+		</form>
+	  </div>
+	</div>
+	
+	<div class="row-fluid">
+		<div class="span2">
+			<div class="well well-small border-well body-content ">
+				<p class="text-center menu-head">Channel</p>
+				<div class="alert alert-info"><div id="active-channel-link" class="text-center"></div></div>
+			</div>
+		</div>
+		<div class="span6 offset1">
+			<div id="cta-well" class="row well well-small border-well body-content">
+				<div id="cta1" class="span4"></div>
+				<div id="cta2" class="span4"></div>
+				<div id="cta3" class="span4"></div>
+			</div>
+		</div>
+		<div class="span2 offset1">
+			<div class="well well-small border-well body-content">
+				<p class="text-center menu-head">City</p>
+				<div class="alert alert-info"><div id="active-city-link" class="text-center"></div></div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row-fluid">
+		<div id="channel-container" style="height:0px;" class="span2">
+			<img id="channel-arrow-up" class="arrow" style="position:relative; z-index:1000;" src="img/up.png">
+			<div style="position:relative;top:-43px;" id="desktop-channel-menu" class="well well-small border-well body-content scroll-well scroll-well-browser visible-desktop"></div>
+			<div style="position:relative;top:-43px;" id="tablet-channel-menu" class="well well-small border-well body-content scroll-well scroll-well-tablet visible-tablet"></div>
+			<img id="channel-arrow-down" class="arrow" style="position:relative; top:-106px;" src="img/down.png">
+		</div>
+		<div class="span8">
+			<div class="well well-small video-well body-content">
+				<div id="video-well">
+					<video width="100%" id="video" controls>
+					  <source src="sample-content/music.mp4" type="video/mp4">
+					</video>
+				</div>
+			</div>
+		</div>
+		<div id="city-container" style="height:0px;" class="span2">
+			<img id="city-arrow-up" class="arrow" style="position:relative; right:0%; z-index:1000;" src="img/up.png">
+			<div style="position:relative;top:-43px;" id="desktop-city-menu" class="well well-small border-well body-content scroll-well scroll-well-browser visible-desktop"></div>
+			<div style="position:relative;top:-43px;" id="tablet-city-menu" class="well well-small border-well body-content scroll-well scroll-well-tablet visible-tablet"></div>
+			<img id="city-arrow-down" class="arrow" style="position:relative; right:0%; top:-106px;" src="img/down.png">
+		</div>
+	</div>
+	<div class="navbar body-content panel-nav default-hidden" style="margin-top: 20px">
+	  <div class="navbar-inner">
+	  	<a style="width:10%;" class="brand" href="#"></a>
+	    <ul style="width:80%;" class="nav nav-pills">
+	      <li style="width:20%;" class="active" id="schedule-toggle"><a href="#schedule">Schedule</a></li>
+	      <li style="width:20%;" class="active" id="whats-hot-toggle"><a href="#whats-hot">What's Hot!!</a></li>
+	      <li style="width:20%;" class="active" id="interact-toggle"><a href="#interact">Stored Content</a></li>
+	      <li style="width:20%;" class="active" id="stored-content-toggle"><a href="#stored-content">Interact</a></li>
+	      <li style="width:20%;" class="active" id="news-feed-toggle"><a href="#news-feed">News Feed</a></li>
+	    </ul>
+	  </div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row-fluid panel-container">
+		<div class="span6 content-panel" id="schedule">
+			<div class="well well-small body-content border-well">
+				<div class="well well-small content-header">Schedule for this channel</div>
+				<div class="content-well">
+				<table style="background-color:#ADD8E6" class="table table-bordered table-striped" id="schedule-table"></table>
+				</div>
+			</div>
+		</div>
+		<div class="span6 content-panel" id="interact">
+			<div class="well well-small body-content border-well">
+				<div class="well well-small content-header">Stored Content for this channel</div>
+				<div class="content-well">
+				<table style="background-color:#ADD8E6" class="table table-bordered table-striped" id="stored-content-table"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid panel-container default-hidden">
+		<div class="span6 content-panel" id="whats-hot">
+			<div class="well well-small body-content border-well">
+				<div class="well well-small content-header">What's Hot!!</div>
+			</div>
+		</div>
+		<div class="span6 content-panel" id="stored-content">
+			<div class="well well-small body-content border-well">
+				<div class="well well-small content-header">Interact</div>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid panel-container default-hidden">
+		<div class="span6 content-panel" id="news-feed">
+			<div class="well well-small body-content border-well">
+				<div class="well well-small content-header">News Feed</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
