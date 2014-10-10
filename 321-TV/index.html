@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <title>321 TV</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/offcanvas.css" rel="stylesheet">
+    <!--321-TV-->
+    <link href="css/321.css" rel="stylesheet" type="text/css" />
+    <link href="css/owl.carousel.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <!--popup window-->
+    <link rel="stylesheet" href="popupwindow.css">
+    
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+            
+            .widget{
+                height:555px;
+                overflow-y: auto;
+            }
+            .widget-mobile{
+                height:80px;
+                overflow-x: scroll;
+            }
+            ::-webkit-scrollbar {
+                width: 10px;
+                height: 10px;
+            }
+            ::-webkit-scrollbar-button:start:decrement,
+            ::-webkit-scrollbar-button:end:increment  {
+                display: none;
+            }
+            
+            ::-webkit-scrollbar-track-piece  {
+                background-color: #000;
+                -webkit-border-radius: 4px;
+            }
+            
+            ::-webkit-scrollbar-thumb:vertical {
+                -webkit-border-radius: 4px;
+                background: #2671ab url(scrollbar_thumb_bg.png) no-repeat center;
+            }
+        </style>
+        
+        <script async src="http://www.google-analytics.com/analytics.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>	
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/purl.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/jquery.tools.min.js"></script>
+    <script type="text/javascript" src="js/jquery.xml2json.js"></script>
+    <script type="text/javascript" src="js/underscore.string.min.js"></script>
+    <script src="js/jquery.form.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/city-page.js"></script>
+    <script>
+    
+        var g_cityid ='10000';
+        
+        $(document).ready(function() {
+            if ($.url().param('show-hidden')) {
+                $('.default-hidden').show();
+                $('#menu-options').css('width', '70%');
+            }
+            
+            $('#user-settings-button').popover({
+                html: true,
+                content: 'User settings allow you to customize your experience in Whitespace.' +
+                '<br/>' +
+                '<br/>' +
+                'Anyone:' +
+                '<ul>' +
+                    '<li>Set home City</li>' +
+                    '<li>Set Home Channel</li>' +
+                '</ul>' +
+                '<br/>' +
+                'For premium subscribers only:' +
+                '<ul>' +
+                    '<li>Set/change log in and password</li>' +
+                    '<li>Friend Zone settings</li>' +
+                    '<li>Notifications for vDVR and show schedules</li>' +
+                    '<li>Set preferences for your own channel line up</li>' +
+                '</ul>'
+            });
+            
+            $('#friend-zone-button').popover({
+                html: true,
+                content: 'In the Friend Zone you, your friends and family can watch and interact in real time while the video is rolling. You can set it up exclusively for your friends or allow others to join just for a single event by password. We are really excited about this feature and look forward to your feedback on how you would use it and any ideas you have.'
+            });
+            
+            $('#premium-button').popover({
+                html: true,
+                content: 'Right now everything is free! Just provide us with your name and email address then enjoy Whitespace!  Please contact us with your feedback.' +
+                    '<br/>' +
+                    '<br/>' +
+                    'Premium subscriptions will enable you to do a lot of cool things in the Whitespace like:' +
+                    '<br/>' +
+                    '<ul>' +
+                        '<li>Create your own channel line up based on your preferences</li>' +
+                        '<li>Set up a Friend Zone to interact in real time via chat or video with a select group of other viewers during a video event.</li>' +
+                        '<li>View special event programming and Live Streaming events</li>' +
+                        '<li>Schedule and store some videos for future viewing</li>' +
+                        '<li>Arrange interactive video chats with others in your Friend Zone while you are viewing your video. Imagine watching a game and video chatting about your Fantasy results in real time.</li>' +
+                    '</ul>'
+            });
+            
+            $('#contact-button').popover({
+                html: true,
+                content: 'You can reach us through email at:' +
+                    '<br />' +
+                    '<ul>' +
+                        '<li><a href="mailto:Dave@321-tv.com">Dave@321-tv.com</a> – Founder and CEO</li>' +
+                        '<li><a href="mailto:Jeff@321-tv.com">Jeff@321-tv.com</a> – Co-Founder and President</li>' +
+                    '</ul>' +
+                    '<br />' +
+                    'If you need to speak with someone right away feel free to call Dave at <a href="tel:3129612777">(312) 961-2777</a>.'
+            });
+            
+            $('body').on('click', function (e) {
+                $('.popover-link').each(function () {
+                    if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                        $(this).popover('hide');
+                    }
+                });
+            });
+            
+            $('.popover-link').each(function () {
+                $(this).click(function () {
+                    $(this).popover('show');
+                });
+            });
+            
+            var cityid = $.url().param('cityid');
+            populateCityMenu(cityid);
+            populateChannelMenu(cityid);
+            
+            
+            ga('create', 'UA-45345035-2', 'whitespace-tv.com' , {'name': 'whitespace'});
+            ga('whitespace.send', 'pageview',{'dimension1': cityid});
+            
+            var step = 25;
+            var scrolling = false;
+
+            $("#channel-arrow-up").bind("click", function(event) {
+                event.preventDefault();
+                $("#desktop-channel-menu").animate({
+                    scrollTop: "-=" + step + "px"
+                });
+            }).bind("mouseover", function(event) {
+                scrolling = true;
+                scrollContent("up", "#desktop-channel-menu");
+            }).bind("mouseout", function(event) {
+                scrolling = false;
+            });
+
+
+            $("#channel-arrow-down").bind("click", function(event) {
+                event.preventDefault();
+                $("#desktop-channel-menu").animate({
+                    scrollTop: "+=" + step + "px"
+                });
+            }).bind("mouseover", function(event) {
+                scrolling = true;
+                scrollContent("down", "#desktop-channel-menu");
+            }).bind("mouseout", function(event) {
+                scrolling = false;
+            });
+            
+            $("#city-arrow-up").bind("click", function(event) {
+                event.preventDefault();
+                $("#desktop-city-menu").animate({
+                    scrollTop: "-=" + step + "px"
+                });
+            }).bind("mouseover", function(event) {
+                scrolling = true;
+                scrollContent("up", "#desktop-city-menu");
+            }).bind("mouseout", function(event) {
+                scrolling = false;
+            });
+
+
+            $("#city-arrow-down").bind("click", function(event) {
+                event.preventDefault();
+                $("#desktop-city-menu").animate({
+                    scrollTop: "+=" + step + "px"
+                });
+            }).bind("mouseover", function(event) {
+                scrolling = true;
+                scrollContent("down", "#desktop-city-menu");
+            }).bind("mouseout", function(event) {
+                scrolling = false;
+            });
+
+            if ($('#newsletterform').length) {
+
+                if ($('#newsletterform').attr('data-mailchimp') == 'true') {
+                    $('#newsletterform').attr('action', 'subscribe-mailchimp.php');
+                    $('#newsletterform').ajaxForm({ dataType: 'json',
+                                            timeout: 2000,
+                                            success: mailchimpCallback});
+                } else {
+                    $('#newsletterform').attr('action', 'subscribe.php');
+                    $('#newsletterform').ajaxForm({ dataType: 'json',
+                                            timeout: 2000,
+                                            success: Callback});
+                }
+                
+                $('#button-newsletter').click(function() { 
+                
+                    $('#newsletterform').submit(); 
+                    return false; 
+                });
+            } 	
+
+            function scrollContent(direction, scrollMenu) {
+                var amount = (direction === "up" ? "-=4px" : "+=4px");
+                $(scrollMenu).animate({
+                    scrollTop: amount
+                }, 1, function() {
+                    if (scrolling) {
+                        scrollContent(direction, scrollMenu);
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+         var whitespaceproperty=location.host;
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script',
+                'http://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-45345035-1', 'whitespace-tv-global.com');
+        ga('send', 'pageview');
+        
+        if (whitespaceproperty.indexOf('naperville-tv.com') > -1)
+        {
+            ga('create', 'UA-45345035-3', 'naperville-tv.com',{'name': 'naperville'});
+            ga('naperville.send', 'pageview',{'dimension1': 'Naperville'});
+         }
+          if (whitespaceproperty.indexOf('whitespace-tv.com') > -1)
+        {
+            ga('create', 'UA-45345035-2', 'whitespace-tv.com',{'name': 'whitespace'});
+            ga('whitespace.send', 'pageview',{'dimension1': 'Whitespace'});
+         }
+    var cityid = $.url().param('cityid');
+    if(cityid == '10001'){
+    
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-45345035-3', 'auto');
+        ga('send', 'pageview');
+    }
+    if(cityid == '10002'){
+        
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-45345035-2', 'auto');
+        ga('send', 'pageview');
+    }
+    if(!cityid || cityid == '10000'){
+        
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-45345035-1', 'auto');
+        ga('send', 'pageview');
+    }
+        
+</script>
+  </head>
+
+  <body>
+  <img alt="full screen background image" src="img/bg.jpg" id="full-screen-background-image" class="visible-desktop" /> 
+<div class="container-fluid">
+	<div class="span4">
+    	<a href="index.html"><img  class="oval header-logo" src="img/321-tv-logo.jpg" /></a> 
+    </div>
+    <div class="span4 text-center">
+    	<img class="wstv-logo" src="img/wstv-logo.png" />
+    </div>
+    <div class="span4">
+    	<header>
+      <div class="inner">
+        <nav>
+          <input type="checkbox" id="nav" /><label for="nav"></label>
+          <ul>
+              <li class="active"><a href="index.html">Home</a></li>
+              <li class="visible-xs"><button class="btn btn-danger" data-toggle="offcanvas">Channels</button></li>
+              <li><a id="open-pop-up-1" href="#pop-up-1">Contact Us</a></li>
+              <li><a href="mailto:admin@whitespace-tv.com">Feedback</a></li>
+        </ul>
+        </nav>
+      </div>
+    </header>
+    </div>
+</div>
+<!--new nav bar -->
+
+    <div class="container-fluid">
+
+    <div class="container-fluid video-detail-well">
+        <div class="col-md-3">			
+            <h5><b>Channel: <span class="channel-name" style="color:#00c700;"></span></b></h5>
+            <h5><b>City: <span class="city-name" style="color:#00c700;"></span></b></h5>
+        </div>
+        <div class="col-md-5 text-center">
+            <div id="cta-well">
+                <div id="cta1" class="btn btn-cta" style="display:inline-block;">Special Offer</div>
+                <div id="open-pop-up-6" class="btn btn-cta cta2" style="display:inline-block;">Phone</div>
+                <div id="open-pop-up-6B" class="btn btn-cta cta3" style="display:inline-block;">More Info.</div>
+            </div>
+        </div>
+		 <div id="pop-up-6" class="pop-up-display-content">
+            <div id="cta2" class="pop-up-text"></div>
+        </div>       
+        <div id="pop-up-6B" class="pop-up-display-content">
+            <div id="cta3" class="pop-up-text"></div>
+        </div>
+        
+        <div class="col-md-4 visible-desktop">
+        <div class="social-icons">
+          <ul>
+        <li class="twitter">
+        <a href="https://www.twitter.com/whitespace_tv_" target="_blank">Twitter</a>
+        </li>
+        
+        <li class="facebook">
+        <a href="https://www.facebook.com/whitespacetv" target="_blank">Facebook</a>
+        </li>
+        
+        <li class="youtube">
+        <a href="https://www.youtube.com/channel/UC6_tfqj7cGPAjRUvwB5oxgg" target="_blank">YouTube</a>
+        </li>
+        
+        <li class="linkedin">
+        <a href="https://www.linkedin.com/company/whitespace-tv?trk=top_nav_home" target="_blank">LinkedIN</a>
+        </li>
+        
+        <li class="instagram">
+        <a href="https://www.instagram.com/whitespacetv" target="_blank">Vimeo</a>
+        </li>
+        
+        </ul>
+        </div>
+        </div>
+    </div><!--/span-->
+    
+    <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-xs-12 col-sm-9">
+        
+          <div class="video-well">
+                <div id="video-well" class="well well-small video-well body-content video-bg">
+                    <video width="100%" id="video" controls>
+                      <source src="sample-content/music.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+         <div class="row-fluid">
+            <div class="col-md-12 button-well border">
+            
+                <div class="col-md-9">
+                    <h2>Create your own internet television channel.</h2>
+                    <h4>Sign up today for your city's very own internet television Channel - Free!<br>
+                    Your City, Your Television, Your Channel, WSTV.</h4>
+                    </div>
+                    <div class="col-md-3">
+                        <a id="open-pop-up-7" href="#pop-up-7" class="btn btn-red">Subscribe</a>
+                    </div>
+            </div><!--/span-->
+         </div>
+         
+         <!--/row-->
+        </div><!--/span-->
+
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+              <div class="list-group col-xs-6 col-sm1">
+                <a href="#" class="list-group-item active text-center">Channel</a>
+                <div id="active-channel-link" class="title-home-sub"></div>
+                <div id="desktop-channel-menu" class="list-well"></div>
+              </div>
+              <div class="list-group col-xs-6 col-sm1">
+                <a href="#" class="list-group-item active text-center">City</a>
+                <div id="active-city-link" class="title-home-sub"></div>
+                <div id="desktop-city-menu" class="list-well"></div>
+              </div>
+        </div><!--/span-->
+        
+      </div><!--/row-->
+
+      <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-6">
+            <div id="schedule">
+                <h4 style="margin-bottom:15px;">Schedule for this channel</h4>
+                <!-- table-->
+                    <table style="background-color:#ADD8E6" class="table table-bordered table-striped" id="schedule-table"></table>
+                    <a href="#">View full Schedule for this channel</a>
+                <!-- table end-->
+            </div>
+          </div>
+          <div class="clearfix visible-mobile"></div>
+          <div class="col-md-6">
+            <div id="interact">
+                <h4 style="margin-bottom:15px;">Stored Content for this channel</h4>
+                <table style="background-color:#ADD8E6" class="table table-bordered table-striped" id="stored-content-table"></table>
+                <a href="#">View full Stored Content for this channel</a>
+        </div>
+          </div>
+        </div>
+    </div>
+
+<!-- footer-->
+
+
+        <div class="video-detail-well footer-bg container-fluid" style="margin-top: 15px;">
+            <div class="col-md-4">
+                <img class="logo-footer" src="img/321-tv-logo.jpg" />
+            </div>
+            <div class="col-md-4 text-center">
+            	© 2014 WSTV  All rights reserved.
+            </div>
+            <div class="col-md-4 text-right">
+            	<a href="#">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Terms & Conditions</a>
+            </div>
+        </div>
+        
+            <div class="social-icons visible-mobile container-fluid text-center">
+          <ul>
+        
+        <li class="twitter">
+        <a href="https://www.twitter.com/whitespace_tv_" target="_blank">Twitter</a>
+        </li>
+        
+        <li class="facebook">
+        <a href="https://www.facebook.com/whitespacetv" target="_blank">Facebook</a>
+        </li>
+        
+        <li class="youtube">
+        <a href="https://www.youtube.com/channel/UC6_tfqj7cGPAjRUvwB5oxgg" target="_blank">YouTube</a>
+        </li>
+        
+        <li class="linkedin">
+        <a href="https://www.linkedin.com/company/whitespace-tv?trk=top_nav_home" target="_blank">LinkedIN</a>
+        </li>
+        
+        <li class="instagram">
+        <a href="https://www.instagram.com/whitespacetv" target="_blank">Vimeo</a>
+        </li>
+       
+        
+        </ul>
+        </div>
+
+      <div class="container">
+
+<div id="pop-up-1" class="pop-up-display-content">
+<h3>Contact Information</h3>
+<span>321 Media Group<br>
+790, Royal St George #123<br>
+60563<br>
+773-234-4564</span>
+</div>
+
+<div id="pop-up-7" class="pop-up-display-content">
+<h3>Subscribe</h3><br>
+<form class="form-horizontal" method="post" action="#" id="newsletterform" data-mailchimp="true">
+                     <div class="form-group">
+    <input type="text" id="newsletter-email" class="form-control" name="newsletter-email" placeholder="Your Email">
+  </div>
+  <div class="form-group">
+    <input type="text" class="input-field field-full form-control" id="newsletter-name" name="newsletter-name" placeholder="Your Name">
+  </div>
+  <div class="form-group">
+    <input type="text" class="input-field field-full form-control" id="newsletter-zip" name="newsletter-zip" placeholder="Zip Code">
+  </div>
+  <div class="form-group">
+    <button type="submit" id="button-newsletter" class="btn btn-red">Subscribe</button>
+  </div> 
+                    </form>
+                                      
+</div>
+</div>
+
+    </div><!--/.container-->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="css/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="js/offcanvas.js"></script>
+    <script src="popupwindow.js"></script>
+    <script src="demo.js"></script>
+  </body>
+</html>
+
+<!-- Localized -->
