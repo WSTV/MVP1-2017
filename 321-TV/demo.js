@@ -83,6 +83,14 @@ $(document).ready(function () {
             size: "small"
         });
     });
+	//small size popup
+    $('#open-pop-up-6B').click(function (e) {
+        e.preventDefault();
+        $('#pop-up-6B').popUpWindow({
+            action: "open",
+            size: "small"
+        });
+    });
 
     //medium size popup
     $('#open-pop-up-7').click(function (e) {
