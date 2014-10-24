@@ -228,7 +228,8 @@ function populateCtaContent(cta1, cta2, cta3, cta1type, cta2type, cta3type) {
 		//$('#cta3').find('a').addClass("btn-video btn-cta");
 		$('#cta3').find('a').addClass("");
 		
-		$('#cta3').show();
+		$(".cta3").show();
+		$('#cta3').show();		
 	}
 	else {
 		$(".cta3").hide();

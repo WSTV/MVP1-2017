@@ -244,7 +244,7 @@
     </script>
     <script>
          var whitespaceproperty=location.host;
-        (function(i, s, o, g, r, a, m) {
+        /*(function(i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function() {
                 (i[r].q = i[r].q || []).push(arguments)
@@ -268,32 +268,21 @@
         {
             ga('create', 'UA-45345035-2', 'whitespace-tv.com',{'name': 'whitespace'});
             ga('whitespace.send', 'pageview',{'dimension1': 'Whitespace'});
-         }
-    var cityid = $.url().param('cityid');
-    if(cityid == '10001'){
-    
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+         }*/
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+    var cityid = $.url().param('cityid');
+    if(cityid == '10001'){
         ga('create', 'UA-45345035-3', 'auto');
         ga('send', 'pageview');
     }
     if(cityid == '10002'){
-        
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
         ga('create', 'UA-45345035-2', 'auto');
         ga('send', 'pageview');
     }
     if(!cityid || cityid == '10000'){
-        
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
         ga('create', 'UA-45345035-1', 'auto');
         ga('send', 'pageview');
     }
